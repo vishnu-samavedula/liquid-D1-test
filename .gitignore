@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+
+# Unreleased/private API material
+liquid-api-reference.md
+
+# Local and generated files
+.DS_Store
+*.log
+webapp/node_modules/
+webapp/dist/
+webapp/.vinext/
+webapp/.wrangler/
+webapp/.sites-runtime/
