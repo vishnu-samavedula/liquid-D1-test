@@ -4,7 +4,7 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Boxes, FlaskConical, Gamepad2, HeartPulse, Landmark, Orbit, ShieldCheck, ShoppingBag, Store, Terminal } from "lucide-react";
+import { Boxes, FlaskConical, Gamepad2, HeartPulse, Landmark, Orbit, Scale, ShieldCheck, ShoppingBag, Store, Terminal } from "lucide-react";
 
 import { demoCategories } from "@/app/demo-data";
 import {
@@ -43,6 +43,7 @@ export function DemoShell({ children, section = "DECISION SYSTEM", title = "WORK
               <SidebarMenu>
                 <SidebarMenuItem><SidebarMenuButton asChild tooltip="Workbench" isActive={pathname === "/"}><Link href="/"><Terminal /><span>Workbench</span></Link></SidebarMenuButton></SidebarMenuItem>
                 <SidebarMenuItem><SidebarMenuButton asChild tooltip="All demos" isActive={pathname === "/demos"}><Link href="/demos"><Boxes /><span>All demos</span></Link></SidebarMenuButton></SidebarMenuItem>
+                <SidebarMenuItem><SidebarMenuButton asChild tooltip="D1 vs. JEV" isActive={pathname === "/demos/financial-services/transaction-pulse"}><Link href="/demos/financial-services/transaction-pulse"><Scale /><span>D1 vs. JEV</span></Link></SidebarMenuButton></SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

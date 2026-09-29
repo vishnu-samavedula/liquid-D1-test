@@ -40,6 +40,9 @@ export default async function DemoCategoryPage({ params }: { params: Promise<{ s
               </div>
               <div className="mode-list">{example.modes.map((mode) => <span key={mode}>{mode}</span>)}</div>
               <div className="guardrail"><strong>HUMAN BOUNDARY</strong><span>{example.guardrail}</span></div>
+              {category.slug === "financial-services" && index === 0 && (
+                <Link href="/demos/financial-services/transaction-pulse" className="launch-demo">LAUNCH D1 vs. JEV <ArrowRight size={16} /></Link>
+              )}
             </div>
           </article>
         ))}
