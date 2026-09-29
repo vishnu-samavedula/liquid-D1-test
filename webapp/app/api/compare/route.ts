@@ -1,6 +1,6 @@
 const LIQUID_ORIGIN = "https://console.liquid.ai";
-const OPENROUTER_ORIGIN = "https://openrouter.ai/api/v1";
-const DEFAULT_JEV_MODEL = "typesafe/jev-router";
+const OPENROUTER_ORIGIN = "https://openrouter.ai/api";
+const DEFAULT_JEV_MODEL = "typesafe/jev-1.13";
 
 type CompareBody = { transaction?: unknown };
 
@@ -9,16 +9,6 @@ const options = {
   step_up: "Require additional customer verification before processing",
   review: "Place in the human transaction review queue",
 };
-
-function parseJsonObject(value: string) {
-  const cleaned = value.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
-  try { return JSON.parse(cleaned); } catch {
-    const start = cleaned.indexOf("{");
-    const end = cleaned.lastIndexOf("}");
-    if (start >= 0 && end > start) return JSON.parse(cleaned.slice(start, end + 1));
-    throw new Error("JEV did not return a JSON object.");
-  }
-}
 
 async function runD1(transaction: string, apiKey: string) {
   const started = Date.now();
@@ -54,7 +44,7 @@ async function runD1(transaction: string, apiKey: string) {
 
 async function runJev(transaction: string, apiKey: string, model: string) {
   const started = Date.now();
-  const response = await fetch(`${OPENROUTER_ORIGIN}/chat/completions`, {
+  const response = await fetch(`${OPENROUTER_ORIGIN}/alpha/decisions`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -63,34 +53,29 @@ async function runJev(transaction: string, apiKey: string, model: string) {
     },
     body: JSON.stringify({
       model,
-      temperature: 0,
-      max_tokens: 320,
-      messages: [
-        {
-          role: "system",
-          content: "You are a transaction-operations routing model. Return only valid JSON. Do not approve, decline, freeze funds, accuse a customer, or invent missing facts.",
+      state: transaction,
+      questions: {
+        decision: {
+          type: "choice",
+          instructions: "Choose the appropriate operational routing for this incoming financial transaction. This is queue triage, not a final fraud or payment decision.",
+          criteria: options,
         },
-        {
-          role: "user",
-          content: `Route the synthetic transaction below to exactly one queue: pass, step_up, or review.\n\nDefinitions:\n- pass: ${options.pass}\n- step_up: ${options.step_up}\n- review: ${options.review}\n\nReturn JSON with exactly these fields: decision (one of pass, step_up, review), confidence (number 0 to 1), risk_score (integer 0 to 100), and rationale (one concise sentence).\n\nTransaction:\n${transaction}`,
-        },
-      ],
+      },
     }),
   });
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload?.error?.message || payload?.error || `OpenRouter returned ${response.status}.`);
-  const content = payload?.choices?.[0]?.message?.content;
-  if (typeof content !== "string") throw new Error("JEV returned no text response.");
-  const parsed = parseJsonObject(content);
+  const answer = payload?.answers?.decision || {};
   return {
     model: payload?.model || model,
-    decision: typeof parsed.decision === "string" ? parsed.decision : null,
-    confidence: typeof parsed.confidence === "number" ? parsed.confidence : null,
-    risk_score: typeof parsed.risk_score === "number" ? parsed.risk_score : null,
-    rationale: typeof parsed.rationale === "string" ? parsed.rationale : null,
+    provider: payload?.provider || "TypeSafe",
+    decision: answer.choice || null,
+    confidence: answer.confidence ?? null,
+    probabilities: answer.probabilities || {},
+    legend: answer.legend || {},
     latency_ms: Date.now() - started,
     usage: payload?.usage || null,
-    raw: parsed,
+    raw: payload,
   };
 }
 

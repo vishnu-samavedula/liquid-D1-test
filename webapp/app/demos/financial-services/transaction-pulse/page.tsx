@@ -15,10 +15,9 @@ type ModelResult = {
     model?: string;
     decision?: string | null;
     confidence?: number | null;
-    risk_score?: number | null;
     probabilities?: Record<string, number>;
     legend?: Record<string, string>;
-    rationale?: string | null;
+    provider?: string;
     latency_ms?: number;
     usage?: { input_tokens?: number; output_tokens?: number } | null;
     raw?: unknown;
@@ -47,11 +46,11 @@ function decisionLabel(value?: string | null) {
   return value ? value.replaceAll("_", " ").toUpperCase() : "—";
 }
 
-function ResultCard({ name, eyebrow, result, native }: { name: string; eyebrow: string; result?: ModelResult; native?: boolean }) {
+function ResultCard({ name, eyebrow, result }: { name: string; eyebrow: string; result?: ModelResult }) {
   const probabilityRows = Object.entries(result?.data?.probabilities || {});
   return (
     <article className="compare-result-card">
-      <div className="compare-card-heading"><div><span>{eyebrow}</span><h3>{name}</h3></div><span className="source-tag">{native ? "NATIVE DECISION" : "PROMPTED JSON"}</span></div>
+      <div className="compare-card-heading"><div><span>{eyebrow}</span><h3>{name}</h3></div><span className="source-tag">NATIVE DECISION</span></div>
       {!result ? (
         <div className="compare-empty">Run the case to see this model&apos;s output.</div>
       ) : !result.ok ? (
@@ -61,11 +60,10 @@ function ResultCard({ name, eyebrow, result, native }: { name: string; eyebrow: 
           <div className="compare-decision">{decisionLabel(result.data?.decision)}</div>
           <div className="compare-metrics">
             <div><span>CONFIDENCE</span><strong>{typeof result.data?.confidence === "number" ? `${(result.data.confidence * 100).toFixed(1)}%` : "—"}</strong></div>
-            <div><span>{native ? "OUTPUT TOKENS" : "RISK SCORE"}</span><strong>{native ? result.data?.usage?.output_tokens ?? "—" : result.data?.risk_score ?? "—"}</strong></div>
+            <div><span>OUTPUT TOKENS</span><strong>{result.data?.usage?.output_tokens ?? "—"}</strong></div>
             <div><span>LATENCY</span><strong>{result.data?.latency_ms != null ? `${result.data.latency_ms} ms` : "—"}</strong></div>
           </div>
           {probabilityRows.length > 0 && <div className="compare-probabilities">{probabilityRows.map(([key, value]) => <div key={key}><span>{result.data?.legend?.[key] || key}</span><strong>{(value * 100).toFixed(1)}%</strong></div>)}</div>}
-          {result.data?.rationale && <p className="jev-rationale"><span>RATIONALE</span>{result.data.rationale}</p>}
           <details className="compare-raw"><summary><Terminal size={14} /> RAW OUTPUT</summary><pre>{JSON.stringify(result.data?.raw, null, 2)}</pre></details>
         </>
       )}
@@ -104,7 +102,7 @@ export default function TransactionPulsePage() {
       <section className="compare-workspace">
         <form className="compare-input" onSubmit={compare}>
           <div className="panel-heading"><span>01 / SYNTHETIC TRANSACTION</span><Scale size={18} /></div>
-          <p className="compare-intro">Give both models the same case and the same three routing choices. D1 returns native structured probabilities; JEV is prompted through OpenRouter to return comparable JSON.</p>
+          <p className="compare-intro">Give both decision models the same case, instructions, and three routing choices. D1 and pinned JEV 1.13 each return native structured probabilities—no chat model or generated prose in the middle.</p>
           <div className="preset-buttons">
             {presets.map((preset, index) => <Button key={preset.label} type="button" variant="ghost" onClick={() => setTransaction(preset.value)}>{String(index + 1).padStart(2, "0")} / {preset.label}</Button>)}
           </div>
@@ -121,8 +119,8 @@ export default function TransactionPulsePage() {
             {result && <div className={agreement ? "agreement yes" : "agreement no"}>{agreement ? <Check size={15} /> : <Scale size={15} />}{agreement ? "SAME ROUTE" : "DIFFERENT ROUTE"}</div>}
           </div>
           <div className="compare-grid">
-            <ResultCard name="D1" eyebrow="LIQUID / SYSTEM ONE" result={result?.d1} native />
-            <ResultCard name="JEV" eyebrow="OPENROUTER" result={result?.jev} />
+            <ResultCard name="D1" eyebrow="LIQUID / SYSTEM ONE" result={result?.d1} />
+            <ResultCard name="JEV 1.13" eyebrow="OPENROUTER / TYPESAFE" result={result?.jev} />
           </div>
           <div className="comparison-note"><Clock3 size={15} /><span>{result?.comparison?.note || "Latency is wall-clock time from the local server. Run several varied cases before drawing conclusions."}</span></div>
         </section>
