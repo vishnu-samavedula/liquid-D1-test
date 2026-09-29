@@ -14,9 +14,6 @@ export default async function DemoCategoryPage({ params }: { params: Promise<{ s
   const category = getDemoCategory(slug);
   if (!category) notFound();
 
-  const currentIndex = demoCategories.findIndex((item) => item.slug === slug);
-  const nextCategory = demoCategories[(currentIndex + 1) % demoCategories.length];
-
   return (
     <DemoShell section={`INDUSTRY TRACK / ${category.code}`} title={category.title}>
       <section className="track-hero">
@@ -43,14 +40,12 @@ export default async function DemoCategoryPage({ params }: { params: Promise<{ s
               {category.slug === "financial-services" && index === 0 && (
                 <Link href="/demos/financial-services/transaction-pulse" className="launch-demo">LAUNCH D1 vs. JEV <ArrowRight size={16} /></Link>
               )}
+              {category.slug === "space-satellites" && index === 0 && (
+                <Link href="/demos/space-satellites/ground-pass-triage" className="launch-demo">LAUNCH GROUND-PASS TRIAGE <ArrowRight size={16} /></Link>
+              )}
             </div>
           </article>
         ))}
-      </section>
-
-      <section className="track-next">
-        <div><span className="page-index">NEXT TRACK</span><h3>{nextCategory.title}</h3></div>
-        <Link href={`/demos/${nextCategory.slug}`}>EXPLORE <ArrowRight size={17} /></Link>
       </section>
     </DemoShell>
   );

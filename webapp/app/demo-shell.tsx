@@ -4,9 +4,7 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Boxes, FlaskConical, Gamepad2, HeartPulse, Landmark, Orbit, Scale, ShieldCheck, ShoppingBag, Store, Terminal } from "lucide-react";
-
-import { demoCategories } from "@/app/demo-data";
+import { Orbit, Satellite, Scale, Terminal } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -24,8 +22,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
-const icons = [Landmark, ShieldCheck, ShoppingBag, Store, HeartPulse, Gamepad2, Orbit];
-
 export function DemoShell({ children, section = "DECISION SYSTEM", title = "WORKBENCH" }: { children: ReactNode; section?: string; title?: string }) {
   const pathname = usePathname();
 
@@ -42,8 +38,8 @@ export function DemoShell({ children, section = "DECISION SYSTEM", title = "WORK
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem><SidebarMenuButton asChild tooltip="Workbench" isActive={pathname === "/"}><Link href="/"><Terminal /><span>Workbench</span></Link></SidebarMenuButton></SidebarMenuItem>
-                <SidebarMenuItem><SidebarMenuButton asChild tooltip="All demos" isActive={pathname === "/demos"}><Link href="/demos"><Boxes /><span>All demos</span></Link></SidebarMenuButton></SidebarMenuItem>
-                <SidebarMenuItem><SidebarMenuButton asChild tooltip="D1 vs. JEV" isActive={pathname === "/demos/financial-services/transaction-pulse"}><Link href="/demos/financial-services/transaction-pulse"><Scale /><span>D1 vs. JEV</span></Link></SidebarMenuButton></SidebarMenuItem>
+                <SidebarMenuItem><SidebarMenuButton asChild tooltip="Transaction Pulse" isActive={pathname === "/demos/financial-services/transaction-pulse"}><Link href="/demos/financial-services/transaction-pulse"><Scale /><span>Transaction Pulse</span></Link></SidebarMenuButton></SidebarMenuItem>
+                <SidebarMenuItem><SidebarMenuButton asChild tooltip="Ground-pass triage" isActive={pathname === "/demos/space-satellites/ground-pass-triage"}><Link href="/demos/space-satellites/ground-pass-triage"><Satellite /><span>Ground-pass triage</span></Link></SidebarMenuButton></SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -51,17 +47,11 @@ export function DemoShell({ children, section = "DECISION SYSTEM", title = "WORK
             <SidebarGroupLabel>INDUSTRY TRACKS</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {demoCategories.map((category, index) => {
-                  const Icon = icons[index] || FlaskConical;
-                  const href = `/demos/${category.slug}`;
-                  return (
-                    <SidebarMenuItem key={category.slug}>
-                      <SidebarMenuButton asChild tooltip={category.title} isActive={pathname === href}>
-                        <Link href={href}><Icon /><span>{category.navTitle}</span></Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  );
-                })}
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild tooltip="Space + Satellites / Public Sector" isActive={pathname === "/demos/space-satellites" || pathname.startsWith("/demos/space-satellites/")}>
+                    <Link href="/demos/space-satellites"><Orbit /><span>Space + satellites</span></Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
