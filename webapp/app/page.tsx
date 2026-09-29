@@ -1,14 +1,30 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, type CSSProperties, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { Activity, ArrowRight, Check, CircleAlert, RotateCcw, Terminal } from "lucide-react";
+import { Activity, ArrowRight, Check, CircleAlert, Factory, Gamepad2, Landmark, ListTree, Map, RotateCcw, Terminal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 
 type Model = { name: string; description?: string; release_date?: string };
 type DecisionType = "noul" | "choice" | "score";
@@ -187,6 +203,73 @@ const visionExamples: Example[] = [
     state: "Review the uploaded workplace image for obvious visible safety concerns such as blocked access, missing barriers, unmanaged spills, or absent required protective equipment. A safety professional makes the final determination.",
     instructions: "Should this image be escalated for immediate human safety review?",
     criteria: "true: Escalate for immediate human safety review\nfalse: No obvious visual reason for immediate escalation",
+  },
+];
+
+const roadmapIdeas = [
+  {
+    id: "demo-game",
+    kind: "FUN / GAME",
+    title: "Decision Arena",
+    description: "Two AI-controlled pilots face the same changing world state. D1 chooses each move, scores danger, and exposes its probabilities live so spectators can predict the next action.",
+    modes: ["choice", "score", "noul"],
+    next: "Build first",
+  },
+  {
+    id: "demo-payments",
+    kind: "FINTECH",
+    title: "Transaction Pulse",
+    description: "Stream synthetic card transactions across a world map. Route each event to pass, step-up verification, or human review while plotting risk score and confidence drift.",
+    modes: ["choice", "score"],
+    next: "High value",
+  },
+  {
+    id: "demo-factory",
+    kind: "INDUSTRIAL",
+    title: "Factory Line Commander",
+    description: "Animate parts moving through an assembly line. Combine PLC error codes, sensor readings, and camera evidence to continue, inspect, rework, quarantine, or stop the line.",
+    modes: ["choice", "score", "noul", "VL"],
+    next: "High value",
+  },
+  {
+    id: "demo-vault",
+    kind: "FUN / SECURITY",
+    title: "The Vault Guard",
+    description: "Players try to persuade an AI guard to release a prize. D1 continuously scores manipulation risk and decides whether each requested action crosses the policy line.",
+    modes: ["score", "noul"],
+    next: "Viral demo",
+  },
+  {
+    id: "demo-router",
+    kind: "AI INFRA",
+    title: "Model Traffic Controller",
+    description: "Route incoming tasks to the smallest capable model. Use choice for model selection, score for complexity, and noul for whether frontier escalation is justified.",
+    modes: ["choice", "score", "noul"],
+    next: "Developer demo",
+  },
+  {
+    id: "demo-satellite",
+    kind: "SPACE",
+    title: "Ground-Pass Triage",
+    description: "Replay satellite telemetry and imagery before a short ground-station window. Prioritize commands, score anomaly severity, and decide whether safe mode is warranted.",
+    modes: ["choice", "score", "noul", "VL"],
+    next: "Visual demo",
+  },
+  {
+    id: "demo-support",
+    kind: "CUSTOMER OPS",
+    title: "Support Control Tower",
+    description: "Process a live queue of tickets, screenshots, and account context. Route ownership, score urgency, and surface only low-confidence cases for human triage.",
+    modes: ["choice", "score", "VL"],
+    next: "Practical demo",
+  },
+  {
+    id: "demo-coldchain",
+    kind: "LIFE SCIENCES",
+    title: "Cold-Chain Watch",
+    description: "Evaluate temperature excursions, packaging photos, stability windows, and shipping events to recommend release, hold, or quality review—with every uncertainty visible.",
+    modes: ["choice", "score", "noul", "VL"],
+    next: "Serious demo",
   },
 ];
 
@@ -475,9 +558,46 @@ export default function Home() {
       : "Optional true and false descriptions";
 
   return (
-    <main className="min-h-screen px-4 py-4 md:px-8 md:py-7">
+    <SidebarProvider
+      defaultOpen
+      style={{ "--sidebar-width": "12.5rem", "--sidebar-width-icon": "3.25rem" } as CSSProperties}
+    >
+      <Sidebar collapsible="icon" className="demo-sidebar">
+        <SidebarHeader className="nav-header">
+          <div className="nav-monogram">L</div>
+          <div className="nav-title"><strong>DEMO INDEX</strong><span>DECISION LAB</span></div>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>WORKSPACE</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem><SidebarMenuButton asChild tooltip="Workbench" isActive><a href="#workbench"><Terminal /><span>Workbench</span></a></SidebarMenuButton></SidebarMenuItem>
+                <SidebarMenuItem><SidebarMenuButton asChild tooltip="Demo roadmap"><a href="#roadmap"><Map /><span>Demo roadmap</span></a></SidebarMenuButton></SidebarMenuItem>
+                <SidebarMenuItem><SidebarMenuButton asChild tooltip="Run log"><a href="#run-log"><ListTree /><span>Run log</span></a></SidebarMenuButton></SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+          <SidebarGroup>
+            <SidebarGroupLabel>NEXT BUILDS</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem><SidebarMenuButton asChild tooltip="Decision Arena"><a href="#demo-game"><Gamepad2 /><span>Game</span></a></SidebarMenuButton></SidebarMenuItem>
+                <SidebarMenuItem><SidebarMenuButton asChild tooltip="Transaction Pulse"><a href="#demo-payments"><Landmark /><span>Payments</span></a></SidebarMenuButton></SidebarMenuItem>
+                <SidebarMenuItem><SidebarMenuButton asChild tooltip="Factory Commander"><a href="#demo-factory"><Factory /><span>Factory</span></a></SidebarMenuButton></SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter className="nav-footer"><span>PRIVATE DEMO</span><span>UNRELEASED</span></SidebarFooter>
+        <SidebarRail />
+      </Sidebar>
+
+      <SidebarInset className="bg-transparent">
+      <div className="min-h-screen px-4 py-4 md:px-8 md:py-7">
       <div className="mx-auto max-w-[1480px]">
         <header className="masthead">
+          <SidebarTrigger className="nav-trigger" />
           <div className="brand-lockup">
             <Image src="/liquid-logo-white.png" alt="Liquid AI" width={1539} height={504} priority className="liquid-logo" />
             <span className="brand-divider" aria-hidden="true" />
@@ -489,7 +609,7 @@ export default function Home() {
           <span>YOUR INPUT</span><span>DON&apos;T OVER-JEV IT. JUST LFM.</span><span>STRUCTURED PROBABILITIES</span>
         </div>
 
-        <section className="workspace" aria-label="Decision workbench">
+        <section id="workbench" className="workspace scroll-target" aria-label="Decision workbench">
           <form className="control-panel" onSubmit={runDecision}>
             <div className="panel-heading"><span>01 / CONFIGURE</span><Activity size={18} strokeWidth={2.4} aria-hidden="true" /></div>
 
@@ -593,7 +713,7 @@ export default function Home() {
           </section>
         </section>
 
-        <section className="log-panel" aria-labelledby="log-heading">
+        <section id="run-log" className="log-panel scroll-target" aria-labelledby="log-heading">
           <div className="log-toolbar">
             <div><span className="log-kicker">03 / EVENT STREAM</span><h2 id="log-heading">RUN LOG</h2></div>
             <Button type="button" variant="ghost" onClick={() => setLogs([])} className="clear-button" disabled={!logs.length}><RotateCcw size={15} aria-hidden="true" /> CLEAR</Button>
@@ -606,8 +726,31 @@ export default function Home() {
           </div>
         </section>
 
+        <section id="roadmap" className="roadmap-panel scroll-target" aria-labelledby="roadmap-heading">
+          <div className="roadmap-heading">
+            <div>
+              <span className="log-kicker">04 / BUILD QUEUE</span>
+              <h2 id="roadmap-heading">DEMO ROADMAP</h2>
+            </div>
+            <p>Game worlds, payment streams, visual operations, and model routing—each built around decisions you can watch, challenge, and measure.</p>
+          </div>
+          <div className="roadmap-grid">
+            {roadmapIdeas.map((idea, index) => (
+              <article id={idea.id} className="roadmap-card scroll-target" key={idea.id}>
+                <div className="roadmap-card-top"><span>{String(index + 1).padStart(2, "0")}</span><span>{idea.kind}</span></div>
+                <h3>{idea.title}</h3>
+                <p>{idea.description}</p>
+                <div className="mode-list">{idea.modes.map((mode) => <span key={mode}>{mode}</span>)}</div>
+                <div className="roadmap-next">{idea.next}</div>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <footer><span>LOCAL SESSION</span><span>KEY PROTECTED SERVER-SIDE</span><span>D1 / SYSTEM ONE</span></footer>
       </div>
-    </main>
+      </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
