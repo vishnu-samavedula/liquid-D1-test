@@ -4,7 +4,7 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Orbit, Satellite, Scale, Terminal } from "lucide-react";
+import { Scale, Terminal } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -39,19 +39,6 @@ export function DemoShell({ children, section = "DECISION SYSTEM", title = "WORK
               <SidebarMenu>
                 <SidebarMenuItem><SidebarMenuButton asChild tooltip="Workbench" isActive={pathname === "/"}><Link href="/"><Terminal /><span>Workbench</span></Link></SidebarMenuButton></SidebarMenuItem>
                 <SidebarMenuItem><SidebarMenuButton asChild tooltip="Transaction Pulse" isActive={pathname === "/demos/financial-services/transaction-pulse"}><Link href="/demos/financial-services/transaction-pulse"><Scale /><span>Transaction Pulse</span></Link></SidebarMenuButton></SidebarMenuItem>
-                <SidebarMenuItem><SidebarMenuButton asChild tooltip="Ground-pass triage" isActive={pathname === "/demos/space-satellites/ground-pass-triage"}><Link href="/demos/space-satellites/ground-pass-triage"><Satellite /><span>Ground-pass triage</span></Link></SidebarMenuButton></SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-          <SidebarGroup>
-            <SidebarGroupLabel>INDUSTRY TRACKS</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip="Space + Satellites / Public Sector" isActive={pathname === "/demos/space-satellites" || pathname.startsWith("/demos/space-satellites/")}>
-                    <Link href="/demos/space-satellites"><Orbit /><span>Space + satellites</span></Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

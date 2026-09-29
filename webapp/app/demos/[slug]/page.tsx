@@ -40,9 +40,6 @@ export default async function DemoCategoryPage({ params }: { params: Promise<{ s
               {category.slug === "financial-services" && index === 0 && (
                 <Link href="/demos/financial-services/transaction-pulse" className="launch-demo">LAUNCH D1 vs. JEV <ArrowRight size={16} /></Link>
               )}
-              {category.slug === "space-satellites" && index === 0 && (
-                <Link href="/demos/space-satellites/ground-pass-triage" className="launch-demo">LAUNCH GROUND-PASS TRIAGE <ArrowRight size={16} /></Link>
-              )}
             </div>
           </article>
         ))}

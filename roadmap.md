@@ -7,6 +7,7 @@ This roadmap tracks the industry demos in the local D1 decision lab. Every opera
 - **Working** — runnable end-to-end against live model APIs
 - **Designed** — product brief and decision contract are defined
 - **Planned** — concept is captured; implementation has not started
+- **Placeholder** — track reserved while the use case is being reconsidered
 
 ## Industry tracks
 
@@ -24,13 +25,12 @@ This roadmap tracks the industry demos in the local D1 decision lab. Every opera
 | Healthcare + Life Sciences | Assay QC Desk | Vision, Choice, Score | Designed | Add control metrics, plate map, and microscopy review |
 | Game / Fun | Decision Arena | Choice, Score | Designed | Build a visible turn-based agent match |
 | Game / Fun | Vault Guard | Noul, Score | Designed | Build a fictional persuasion-resistance challenge |
-| Space + Satellites | Ground-Pass Triage | Noul, Choice, Score | **Working** | `/demos/space-satellites/ground-pass-triage` — three-question D1 vs JEV comparison |
-| Space + Satellites | Disaster Imagery Queue | Vision, Choice, Score | Designed | Add pre/post-event imagery and analyst prioritization |
+| Space + Satellites | Streaming use case — TBD | TBD | **Placeholder** | Brainstorm a genuinely streaming, stateful decision problem before rebuilding |
 
 ## Near-term build order
 
-1. Harden Transaction Pulse and Ground-Pass Triage with a labeled replay set.
-2. Add Disaster Imagery Queue as the first vision-based comparison.
+1. Harden Transaction Pulse with a labeled replay set.
+2. Brainstorm a streaming use case where D1 responds to changing state over time.
 3. Build Decision Arena to make probability changes visible over time.
 4. Add one operational workflow each for retail and healthcare/life sciences.
 

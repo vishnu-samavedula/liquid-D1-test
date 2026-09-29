@@ -180,33 +180,6 @@ export const demoCategories: DemoCategory[] = [
       },
     ],
   },
-  {
-    slug: "space-satellites",
-    code: "SAT",
-    title: "SPACE + SATELLITES / PUBLIC SECTOR",
-    navTitle: "Space + satellites",
-    description: "Mission-operations and Earth-observation triage with human operators firmly in command.",
-    examples: [
-      {
-        title: "GROUND-PASS TRIAGE",
-        subtitle: "Limited-window mission operations",
-        problem: "Rank telemetry anomalies and recommended checks before a short ground-station contact window, with uncertainty shown to the operator.",
-        inputs: ["Telemetry and fault codes", "Recent command history", "Pass duration and subsystem limits"],
-        outputs: ["Recommended check sequence", "Urgency score", "Safe-mode review indicator"],
-        modes: ["NOUL", "CHOICE", "SCORE"],
-        guardrail: "Decision support only; no command is transmitted and flight controllers retain authority.",
-      },
-      {
-        title: "DISASTER IMAGERY QUEUE",
-        subtitle: "Earth-observation analyst routing",
-        problem: "Review post-event satellite images for cloud cover, scene usability, and likely change areas so analysts can prioritize wildfire, flood, or storm imagery.",
-        inputs: ["Pre/post-event imagery", "Capture metadata", "Area-of-interest context"],
-        outputs: ["USABLE / LIMITED / RECAPTURE", "Analyst priority", "Likely change-region confidence"],
-        modes: ["VISION", "CHOICE", "SCORE"],
-        guardrail: "The model prioritizes imagery for analysts; it does not issue emergency findings or response orders.",
-      },
-    ],
-  },
 ];
 
 export function getDemoCategory(slug: string) {
