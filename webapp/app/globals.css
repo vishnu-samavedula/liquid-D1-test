@@ -169,27 +169,58 @@ button, textarea, select { font: inherit; }
 .log-err { color: #d2c6f5; }
 .log-empty { display: flex; align-items: center; gap: 8px; padding: 20px; color: #91a0aa; font-size: 0.8rem; }
 
-.roadmap-panel { margin-top: 22px; border: 2px solid var(--line); background: #101012; box-shadow: 7px 7px 0 rgba(108, 67, 232, 0.23); }
-.roadmap-heading { display: flex; align-items: end; justify-content: space-between; gap: 28px; padding: 20px; border-bottom: 2px solid var(--line); }
-.roadmap-heading h2 { margin: 0; font-size: 1.25rem; letter-spacing: 0.04em; }
-.roadmap-heading p { max-width: 620px; margin: 0; color: #a2a2a0; font-size: 0.8rem; line-height: 1.55; }
-.roadmap-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.roadmap-card { position: relative; min-height: 245px; padding: 20px; border-right: 1px solid #3d3d41; border-bottom: 1px solid #3d3d41; background: #0c0c0e; transition: background 140ms ease, box-shadow 140ms ease; }
-.roadmap-card:nth-child(2n) { border-right: 0; }
-.roadmap-card:hover { z-index: 1; background: #141119; box-shadow: inset 4px 0 0 var(--blue); }
-.roadmap-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #8175a4; font-size: 0.66rem; font-weight: 900; letter-spacing: 0.1em; }
-.roadmap-card h3 { margin: 28px 0 10px; font-size: clamp(1.1rem, 2.2vw, 1.55rem); letter-spacing: -0.03em; }
-.roadmap-card p { min-height: 68px; margin: 0; color: #acacaa; font-size: 0.78rem; line-height: 1.55; }
+.library-hero,
+.track-hero { position: relative; margin-bottom: 18px; padding: clamp(28px, 5vw, 66px); border: 2px solid var(--line); background: #0c0c0e; box-shadow: 7px 7px 0 rgba(108, 67, 232, 0.28); overflow: hidden; }
+.library-hero::after,
+.track-hero::after { content: ""; position: absolute; right: -110px; bottom: -150px; width: 360px; height: 360px; border: 1px solid #4d386f; border-radius: 50%; box-shadow: 0 0 0 42px rgba(108, 67, 232, 0.06), 0 0 0 86px rgba(108, 67, 232, 0.035); pointer-events: none; }
+.page-index { position: relative; z-index: 1; display: block; margin-bottom: 18px; color: #a88cff; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.14em; }
+.library-hero h2,
+.track-hero h2 { position: relative; z-index: 1; max-width: 1040px; margin: 0; font-size: clamp(2.1rem, 6vw, 5.8rem); font-weight: 900; letter-spacing: -0.065em; line-height: 0.92; }
+.library-hero p,
+.track-hero p { position: relative; z-index: 1; max-width: 780px; margin: 28px 0 0; color: #b1b1ae; font-size: clamp(0.84rem, 1.2vw, 1rem); line-height: 1.7; }
+.back-link { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 34px; color: #d3c8f6; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.09em; text-decoration: none; }
+.back-link:hover { color: #fff; }
+
+.category-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 2px solid var(--line); background: #101012; box-shadow: 7px 7px 0 rgba(108, 67, 232, 0.23); }
+.category-card { position: relative; min-height: 330px; padding: 24px; border-right: 1px solid #3d3d41; border-bottom: 1px solid #3d3d41; color: var(--ink); background: #0c0c0e; text-decoration: none; transition: background 140ms ease, box-shadow 140ms ease; }
+.category-card:nth-child(2n) { border-right: 0; }
+.category-card:hover { z-index: 1; background: #15111d; box-shadow: inset 5px 0 0 var(--blue); }
+.category-card-top { display: flex; justify-content: space-between; color: #8e7fbd; font-size: 0.68rem; font-weight: 900; letter-spacing: 0.12em; }
+.category-card h3 { max-width: 620px; margin: 34px 0 12px; font-size: clamp(1.35rem, 2.7vw, 2.2rem); letter-spacing: -0.05em; line-height: 1; }
+.category-card > p { max-width: 610px; margin: 0; color: #aaa9ad; font-size: 0.8rem; line-height: 1.6; }
+.category-examples { display: grid; gap: 7px; margin-top: 25px; color: #dedee1; font-size: 0.72rem; font-weight: 900; }
+.category-examples span::before { content: "+"; margin-right: 9px; color: #8f6ff1; }
+.card-link { position: absolute; right: 21px; bottom: 20px; display: inline-flex; align-items: center; gap: 9px; color: #ae98ef; font-size: 0.68rem; font-weight: 900; letter-spacing: 0.08em; }
+
+.example-grid { display: grid; gap: 18px; }
+.example-card { display: grid; grid-template-columns: 94px minmax(0, 1fr); border: 2px solid var(--line); background: #0c0c0e; box-shadow: 7px 7px 0 rgba(108, 67, 232, 0.22); }
+.example-number { display: flex; justify-content: center; padding-top: 28px; border-right: 1px solid #414146; color: #6f51cb; font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 900; }
+.example-copy { padding: clamp(24px, 4vw, 44px); }
+.example-subtitle { color: #9c87dc; font-size: 0.68rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; }
+.example-card h3 { margin: 12px 0 14px; font-size: clamp(1.7rem, 4vw, 3.6rem); letter-spacing: -0.06em; line-height: 0.98; }
+.example-problem { max-width: 980px; margin: 0; color: #b7b7b3; font-size: 0.9rem; line-height: 1.7; }
+.example-specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 32px; }
+.example-specs > div { padding: 18px; border: 1px solid #4d4d52; background: #09090b; }
+.example-specs h4 { margin: 0 0 14px; color: #a88cff; font-size: 0.68rem; letter-spacing: 0.12em; }
+.example-specs ul { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; color: #dadad7; font-size: 0.78rem; line-height: 1.45; }
+.example-specs li::before { content: "//"; margin-right: 9px; color: #77777d; }
 .mode-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
 .mode-list span { padding: 4px 7px; border: 1px solid #4d4d52; color: #c8c8c6; font-size: 0.64rem; font-weight: 900; text-transform: uppercase; }
-.roadmap-next { position: absolute; right: 16px; bottom: 16px; color: #8f6ff1; font-size: 0.66rem; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; }
+.guardrail { display: grid; grid-template-columns: 145px minmax(0, 1fr); gap: 18px; margin-top: 22px; padding-top: 20px; border-top: 1px solid #414146; color: #aeadb1; font-size: 0.73rem; line-height: 1.55; }
+.guardrail strong { color: #f1f1ee; letter-spacing: 0.06em; }
+.track-next { display: flex; align-items: center; justify-content: space-between; gap: 22px; margin-top: 18px; padding: 22px 25px; border: 2px solid var(--line); background: #151517; }
+.track-next .page-index { margin-bottom: 7px; }
+.track-next h3 { margin: 0; font-size: clamp(1rem, 2.2vw, 1.45rem); }
+.track-next a { display: inline-flex; align-items: center; gap: 10px; flex: none; padding: 13px 16px; border: 1px solid #cdbff8; background: var(--blue); color: #fff; font-size: 0.72rem; font-weight: 900; letter-spacing: 0.08em; text-decoration: none; }
+.track-next a:hover { background: #7d58ea; }
 footer { display: flex; justify-content: space-between; gap: 20px; padding: 18px 2px 4px; color: #85857f; font-size: 0.67rem; font-weight: 900; letter-spacing: 0.08em; }
 
 @media (max-width: 850px) {
   .workspace { grid-template-columns: 1fr; }
   .control-panel { border-right: 0; border-bottom: 2px solid var(--ink); }
   .ticker { justify-content: flex-start; }
-  .roadmap-heading { align-items: flex-start; flex-direction: column; }
+  .category-grid { grid-template-columns: 1fr; }
+  .category-card { border-right: 0; }
 }
 @media (max-width: 560px) {
   main { padding: 10px !important; }
@@ -205,8 +236,14 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 18px
   .metric-grid { grid-template-columns: 1fr 1fr; }
   .metric-grid > div:last-child { grid-column: 1 / -1; }
   .log-row { grid-template-columns: 73px 45px minmax(0, 1fr); gap: 8px; padding-inline: 10px; font-size: 0.72rem; }
-  .roadmap-grid { grid-template-columns: 1fr; }
-  .roadmap-card { border-right: 0; }
+  .library-hero,
+  .track-hero { padding: 26px 20px; }
+  .example-card { grid-template-columns: 1fr; }
+  .example-number { justify-content: flex-start; padding: 18px 20px; border-right: 0; border-bottom: 1px solid #414146; }
+  .example-copy { padding: 22px 18px; }
+  .example-specs { grid-template-columns: 1fr; }
+  .guardrail { grid-template-columns: 1fr; gap: 7px; }
+  .track-next { align-items: flex-start; flex-direction: column; }
   footer { flex-direction: column; gap: 4px; }
 }
 @media (prefers-reduced-motion: reduce) {
