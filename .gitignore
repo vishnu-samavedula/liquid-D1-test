@@ -2,7 +2,7 @@
 .env.*
 !.env.example
 
-# Unreleased/private API material
+# Local API material
 liquid-api-reference.md
 openrouter-jev-key.md.rtf
 

@@ -43,7 +43,7 @@ export function DemoShell({ children, section = "DECISION SYSTEM", title = "WORK
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-        <SidebarFooter className="nav-footer"><span>PRIVATE DEMO</span><span>UNRELEASED</span></SidebarFooter>
+        <SidebarFooter className="nav-footer"><span>LOCAL DEMO</span><span>D1 / SYSTEM ONE</span></SidebarFooter>
         <SidebarRail />
       </Sidebar>
 
