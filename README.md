@@ -4,6 +4,8 @@ A local-first demonstration of [Liquid decision models](https://docs.liquid.ai/l
 
 This is a decision-model demo—not a chatbot. It focuses on choosing, scoring, and evaluating explicit outcomes without generated prose in the middle.
 
+For the public model specification and API examples, see the [Liquid Decision Models documentation](https://docs.liquid.ai/lfm/models/decision-models).
+
 ## What the demo shows
 
 ### Configurable D1 workbench
